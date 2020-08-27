@@ -2,6 +2,7 @@ package com.debuggor.schnorrkel.sign;
 
 import cafe.cryptography.curve25519.*;
 import com.debuggor.schnorrkel.utils.HexUtils;
+import com.debuggor.schnorrkel.utils.ScalarUtils;
 
 import java.security.SecureRandom;
 
@@ -33,6 +34,14 @@ public class KeyPair {
 
     public static KeyPair fromSecretSeed(byte[] seed) {
         PrivateKey privateKey = new PrivateKey(seed);
+        byte[] key = privateKey.getKey();
+        RistrettoElement ristretto = ristrettoTable.multiply(Scalar.fromBits(key));
+        PublicKey publicKey = new PublicKey(ristretto);
+        return new KeyPair(publicKey, privateKey);
+    }
+
+    public static KeyPair fromPrivateKey(byte[] prvkey) {
+        PrivateKey privateKey = new PrivateKey(prvkey);
         byte[] key = privateKey.getKey();
         RistrettoElement ristretto = ristrettoTable.multiply(Scalar.fromBits(key));
         PublicKey publicKey = new PublicKey(ristretto);
