@@ -24,5 +24,19 @@ public class ScalarUtils {
         return scalar;
     }
 
+    public static byte[] multiply_scalar_bytes_by_cofactor(byte[] scalar) {
+
+        int high = 0;
+        for (int i = 0; i < scalar.length; i++) {
+            int b = scalar[i] & 0xFF;
+            int r = b & 0b11100000;
+            b <<= 3;
+            b += high;
+            high = r >> 5;
+            scalar[i] = (byte) b;
+        }
+        return scalar;
+    }
+
 
 }
