@@ -28,6 +28,19 @@ public class PrivateKey {
         }
     }
 
+    public PrivateKey(byte[] prvkey) {
+
+        byte[] key2 = new byte[32];
+        byte[] nonce = new byte[32];
+        System.arraycopy(prvkey, 0, key2, 0, 32);
+        System.arraycopy(prvkey, 32, nonce, 0, 32);
+
+        byte[] key = ScalarUtils.divide_scalar_bytes_by_cofactor(key2);
+
+        this.key = key;
+        this.nonce = nonce;
+    }
+
     public byte[] toPrivateKey() {
 
         byte[] key2 = ScalarUtils.multiply_scalar_bytes_by_cofactor(key);
