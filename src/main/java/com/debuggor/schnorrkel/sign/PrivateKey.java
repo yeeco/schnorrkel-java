@@ -28,6 +28,18 @@ public class PrivateKey {
         }
     }
 
+    public byte[] toPrivateKey() {
+
+        byte[] key2 = ScalarUtils.multiply_scalar_bytes_by_cofactor(key);
+        byte[] privateKey = new byte[key2.length + nonce.length];
+
+        System.arraycopy(key2, 0, privateKey, 0, 32);
+        System.arraycopy(nonce, 0, privateKey, 32, 32);
+
+        return privateKey;
+
+    }
+
 
     private void expand_uniform(byte[] seed) {
         try {

@@ -25,7 +25,16 @@ public class KeyTest {
 
         KeyPair pair = KeyPair.generateKeyPair();
 
+
+        KeyPair keyPair1 = KeyPair.fromSecretSeed(HexUtils.hexToBytes("579d7aa286b37b800b95fe41adabbf0c2a577caf2854baeca98f8fb242ff43ae"), ExpansionMode.Ed25519);
+
+        PrivateKey privateKey1 = keyPair.getPrivateKey();
+        byte[] privateKeyBytes = privateKey1.toPrivateKey();
+        System.out.println("private key:" + HexUtils.bytesToHex(privateKeyBytes));
+
     }
+
+
 
 
 }
