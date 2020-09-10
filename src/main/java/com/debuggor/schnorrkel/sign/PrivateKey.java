@@ -17,12 +17,20 @@ public class PrivateKey {
     private byte[] nonce;
     private byte[] h;
 
-    public PrivateKey(byte[] seed) {
+    public PrivateKey(byte[] bytes) {
+        if (bytes.length==32) {
+            initWithSeed(bytes);
+        }else if (bytes.length==64) {
+            initWithPrvKey(bytes);
+        }
+    }
+
+    public void initWithSeed(byte[] seed) {
         this.seed = seed;
         hashSeed(seed);
     }
 
-    public PrivateKey(byte[] prvkey) {
+    public void initWithPrvKey(byte[] prvkey) {
 
         byte[] key2 = new byte[32];
         byte[] nonce = new byte[32];
